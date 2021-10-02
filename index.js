@@ -18,12 +18,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useCreateIndex: true,
 });
 
-app.use(
-  cors({
-    origin: "https://manage-mvp.netlify.app/",
-    methods: "*",
-  })
-);
+app.use(cors());
 app.use(
   "/graphql",
   graphqlHTTP({
@@ -42,12 +37,7 @@ const io = require("socket.io")(http, {
   cors: {
     // origin: "https://project-boilerplate.netlify.app",
 
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "https://project-boilerplate.netlify.app/",
-      "https://manage-mvp.netlify.app/",
-    ],
+    origin: "https://manage-mvp.netlify.app/",
     method: ["POST", "post", "get", "GET", "OPTIONS", "options"],
     allowedHeaders: ["Content-Type"],
     // credentials: true,
