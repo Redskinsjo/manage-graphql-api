@@ -18,7 +18,12 @@ mongoose.connect(process.env.MONGODB_URI, {
   useCreateIndex: true,
 });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://manage-mvp.netlify.app/",
+    methods: "*",
+  })
+);
 app.use(
   "/graphql",
   graphqlHTTP({
