@@ -46,6 +46,7 @@ const io = require("socket.io")(http, {
       "http://localhost:3000",
       "http://localhost:3001",
       "https://project-boilerplate.netlify.app/",
+      "https://manage-mvp.netlify.app/",
     ],
     method: ["POST", "post", "get", "GET", "OPTIONS", "options"],
     allowedHeaders: ["Content-Type"],
