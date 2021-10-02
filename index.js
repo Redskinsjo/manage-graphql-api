@@ -37,8 +37,8 @@ const io = require("socket.io")(http, {
   cors: {
     // origin: "https://project-boilerplate.netlify.app",
 
-    origin: "https://manage-mvp.netlify.app/",
-    method: ["POST", "post", "get", "GET", "OPTIONS", "options"],
+    origin: "https://manage-mvp.netlify.app",
+    method: "*",
     allowedHeaders: ["Content-Type"],
     // credentials: true,
   },
