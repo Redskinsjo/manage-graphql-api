@@ -35,8 +35,6 @@ app.use(
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   cors: {
-    // origin: "https://project-boilerplate.netlify.app",
-
     origin: "*",
     method: "*",
     allowedHeaders: ["Content-Type"],
