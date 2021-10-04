@@ -20,8 +20,13 @@ const tablesResolvers = {
   },
   tables: async () => {
     try {
-      console.log("before query");
       const tables = await Table.find();
+      // .populate({
+      //   path: "orders",
+      //   populate: { path: "main" },
+      // });
+      // console.log("after");
+      // console.log(tables[0].orders[0]);
       if (tables) {
         return tables;
       }
@@ -34,7 +39,6 @@ const tablesResolvers = {
   }) => {
     try {
       const exist = await Table.findOne({ numero, active: true });
-      console.log(guests);
       if (!exist) {
         const newTable = new Table({
           numero,
@@ -45,7 +49,6 @@ const tablesResolvers = {
           guests,
           orders,
         });
-        console.log(newTable);
         const savedTable = await newTable.save();
         return savedTable;
       } else {

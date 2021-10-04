@@ -59,19 +59,20 @@ module.exports = buildSchema(`
         sauce: Sauce
         cooking: String
         consumer: Guest
-        table: Table
+        table: Int
     } 
+
     input OrderInput {
         name: String
-        main: MainInput
-        side: SideInput
+        main: ID
+        side: ID
         salt: String
         pepper: String
-        herbsAndSpices: HerbsAndSpicesInput
-        sauce: SauceInput
+        herbsAndSpices: [ID]
+        sauce: ID
         cooking: String
         consumer: String
-        table: TableInput
+        table: Int
     }
 
     type Guest {

@@ -1,4 +1,5 @@
 const Order = require("../../models/Order");
+const Table = require("../../models/Table");
 
 const ordersResolvers = {
   order: async (id) => {
@@ -17,7 +18,7 @@ const ordersResolvers = {
   },
   orders: async () => {
     try {
-      const orders = await Order.find();
+      const orders = await Order.find().populate("main");
       if (orders) {
         return orders;
       }
@@ -29,27 +30,52 @@ const ordersResolvers = {
     const result = await Order.find({ table: tableId });
     return result;
   },
-  createOrder: async ({
-    data: { name, main, side, salt, pepper, herbsAndSpices, sauce, cooking },
+  createOrder: ({
+    data: {
+      table,
+      name,
+      main,
+      side,
+      salt,
+      pepper,
+      herbsAndSpices,
+      sauce,
+      cooking,
+    },
   }) => {
     try {
-      const exist = await Order.findOne({ name });
-      if (!exist) {
-        const newOrder = new Order({
-          name,
-          main,
-          side,
-          salt,
-          pepper,
-          herbsAndSpices,
-          sauce,
-          cooking,
+      const newOrder = new Order({
+        table,
+        name,
+        main,
+        side,
+        salt,
+        pepper,
+        herbsAndSpices,
+        sauce,
+        cooking,
+      });
+      let createdOrder;
+      newOrder
+        .save()
+        .then((savedOrder) => {
+          createdOrder = savedOrder;
+          return Table.findOne({ numero: table });
+        })
+        .then((tableRelated) => {
+          if (tableRelated) {
+            tableRelated.orders.push(createdOrder);
+            return tableRelated.save();
+          } else {
+            throw new Error("no table related exist");
+          }
+        })
+        .then(() => {
+          return createdOrder;
+        })
+        .catch((err) => {
+          throw new Error(err.message);
         });
-        const savedOrder = await newOrder.save();
-        return savedOrder;
-      } else {
-        throw new Error("elem already exist");
-      }
     } catch (err) {
       throw new Error(err.message);
     }
