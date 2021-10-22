@@ -50,7 +50,7 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   cors: {
     origin: ["https://manage-mvp.netlify.app", "http://localhost:3000"],
-    method: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    method: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     allowedHeaders: ["Content-Type"],
     // credentials: true,
   },
