@@ -8,6 +8,7 @@ const schema = require("./graphql/schema");
 // const schema = require("./graphql/schema2/index");
 require("dotenv").config();
 
+app.use(cors());
 // Connection DB
 module.exports.conn_main = mongoose.createConnection(
   process.env.MONGODB_URI_MAIN_API,
@@ -29,7 +30,6 @@ const guestsResolvers = require("./graphql/resolvers/Guests");
 const ordersResolvers = require("./graphql/resolvers/Orders");
 const tablesResolvers = require("./graphql/resolvers/Tables");
 
-app.use(cors());
 app.use(
   "/graphql",
   graphqlHTTP({
