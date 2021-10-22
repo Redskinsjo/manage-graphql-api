@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const conn = require("../../index").conn_main;
 
 const Schema = mongoose.Schema;
 
@@ -10,4 +11,4 @@ const SauceSchema = new Schema({
   ratio: String,
 });
 
-module.exports = mongoose.model("Sauce", SauceSchema);
+module.exports = conn.model("Sauce", SauceSchema);

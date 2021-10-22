@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const conn = require("../../index").conn_main;
 
 const Schema = mongoose.Schema;
 
@@ -21,4 +22,4 @@ const TableSchema = new Schema({
   orders: [{ type: Schema.Types.ObjectId, ref: "Order" }],
 });
 
-module.exports = mongoose.model("Table", TableSchema);
+module.exports = conn.model("Table", TableSchema);

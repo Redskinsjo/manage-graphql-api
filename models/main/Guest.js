@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const conn = require("../../index").conn_main;
 
 const Schema = mongoose.Schema;
 
@@ -11,4 +12,4 @@ const GuestSchema = new Schema({
   anniversary: String,
 });
 
-module.exports = mongoose.model("Guest", GuestSchema);
+module.exports = conn.model("Guest", GuestSchema);

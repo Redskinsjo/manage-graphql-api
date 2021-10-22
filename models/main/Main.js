@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const conn = require("../../index").conn_main;
 
 const Schema = mongoose.Schema;
 
@@ -8,4 +9,4 @@ const MainSchema = new Schema({
   origin: String,
 });
 
-module.exports = mongoose.model("Main", MainSchema);
+module.exports = conn.model("Main", MainSchema);

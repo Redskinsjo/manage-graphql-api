@@ -1,5 +1,9 @@
-const Order = require("../../models/Order");
-const Table = require("../../models/Table");
+const Order = require("../../models/main/Order");
+const Table = require("../../models/main/Table");
+const Main = require("../../models/restaurants_assets/Main");
+const Side = require("../../models/restaurants_assets/Side");
+const HerbsAndSpices = require("../../models/restaurants_assets/HerbsAndSpices");
+const Sauce = require("../../models/restaurants_assets/Sauce");
 
 const ordersResolvers = {
   order: async (id) => {
@@ -18,7 +22,10 @@ const ordersResolvers = {
   },
   orders: async () => {
     try {
-      const orders = await Order.find().populate("main");
+      const orders = await Order.find().populate({
+        pathname: "name",
+        model: Main,
+      });
       if (orders) {
         return orders;
       }
@@ -27,7 +34,14 @@ const ordersResolvers = {
     }
   },
   ordersByTable: async ({ tableId }) => {
-    const result = await Order.find({ table: tableId });
+    const result = await Order.find({ table: tableId })
+      .populate({
+        path: "main",
+        model: Main,
+      })
+      .populate({ path: "side", model: Side })
+      .populate({ path: "herbsAndSpices", model: HerbsAndSpices })
+      .populate({ path: "sauce", model: Sauce });
     return result;
   },
   createOrder: ({

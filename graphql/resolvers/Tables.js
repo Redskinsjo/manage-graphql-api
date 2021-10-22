@@ -1,4 +1,4 @@
-const Table = require("../../models/Table");
+const Table = require("../../models/main/Table");
 
 const tablesResolvers = {
   table: async ({ id }) => {

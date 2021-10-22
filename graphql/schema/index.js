@@ -55,7 +55,7 @@ module.exports = buildSchema(`
         side: Side
         salt: String
         pepper: String
-        herbsAndSpices: HerbsAndSpices
+        herbsAndSpices: [HerbsAndSpices]
         sauce: Sauce
         cooking: String
         consumer: Guest
@@ -71,7 +71,7 @@ module.exports = buildSchema(`
         herbsAndSpices: [ID]
         sauce: ID
         cooking: String
-        consumer: String
+        consumer: ID
         table: Int
     }
 
@@ -89,7 +89,7 @@ module.exports = buildSchema(`
         firstname: String
         lastname: String
         returningGuest: Boolean
-        previousDishes: [OrderInput!]
+        previousDishes: [ID!]
         anniversary: String
     }
     type GuestsSeated {
@@ -98,7 +98,7 @@ module.exports = buildSchema(`
     }
     input GuestsSeatedInput {
         count: Int
-        profiles: [String]
+        profiles: [GuestInput]
     }
 
     type Table {
@@ -118,15 +118,15 @@ module.exports = buildSchema(`
         outdoor: Boolean
         active: Boolean
         guests: GuestsSeatedInput
-        orders: [OrderInput]
-
+        orders: [ID]
     }
 
 
   type RootQuery {
     guest(id: ID!): Guest!
     guests: [Guest!]!
-    ordersByTable(tableId: ID!): [Order]
+    searchGuest(input: String): [Guest]
+    ordersByTable(tableId: Int): [Order]
     order(id: ID!): Order!
     orders: [Order!]!
     table(id: ID): Table

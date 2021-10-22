@@ -1,4 +1,5 @@
-const Guest = require("../../models/Guest");
+const Guest = require("../../models/main/Guest");
+const Order = require("../../models/main/Order");
 
 const guestsResolvers = {
   guest: async ({ id }) => {
@@ -25,6 +26,20 @@ const guestsResolvers = {
       throw new Error(err.message);
     }
   },
+  searchGuest: async ({ input }) => {
+    try {
+      if (input) {
+        const regex = new RegExp(input, "gi");
+        const guests = await Guest.find({ fullname: regex }).populate({
+          path: "previousDishes",
+          model: Order,
+        });
+        return guests;
+      }
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  },
   createGuest: async ({
     data: {
       fullname,
@@ -36,7 +51,7 @@ const guestsResolvers = {
     },
   }) => {
     try {
-      const exist = await Guest.findOne({ fullname });
+      const exist = await Guest.findOne({ firstname, lastname, anniversary });
       if (!exist) {
         const newGuest = new Guest({
           fullname,
@@ -57,14 +72,8 @@ const guestsResolvers = {
   },
   updateGuest: async ({ id, data }) => {
     try {
-      const exist = await Guest.findById(id);
-      if (exist) {
-        const newGuest = new Guest(data);
-        const savedGuest = await newGuest.save();
-        return savedGuest;
-      } else {
-        throw new Error("guest doesn't exist in DB");
-      }
+      const updatedGuest = await Guest.findByIdAndUpdate(id, data);
+      return updatedGuest;
     } catch (err) {
       throw new Error(err.message);
     }

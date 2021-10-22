@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const conn = require("../../index").conn_main;
 
 const Schema = mongoose.Schema;
 
@@ -26,4 +27,4 @@ const OrderSchema = new Schema({
   cooking: String,
 });
 
-module.exports = mongoose.model("Order", OrderSchema);
+module.exports = conn.model("Order", OrderSchema);

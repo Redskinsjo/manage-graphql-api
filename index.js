@@ -4,19 +4,30 @@ const app = require("express")();
 const { graphqlHTTP } = require("express-graphql");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const guestsResolvers = require("./graphql/resolvers/Guests");
-const ordersResolvers = require("./graphql/resolvers/Orders");
-const tablesResolvers = require("./graphql/resolvers/Tables");
 const schema = require("./graphql/schema");
 // const schema = require("./graphql/schema2/index");
 require("dotenv").config();
 
 // Connection DB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-});
+module.exports.conn_main = mongoose.createConnection(
+  process.env.MONGODB_URI_MAIN_API,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  }
+);
+module.exports.conn_restaurant_asset = mongoose.createConnection(
+  process.env.MONGODB_URI_RESTAURANT_ASSETS,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  }
+);
+const guestsResolvers = require("./graphql/resolvers/Guests");
+const ordersResolvers = require("./graphql/resolvers/Orders");
+const tablesResolvers = require("./graphql/resolvers/Tables");
 
 app.use(cors());
 app.use(
