@@ -10,7 +10,7 @@ require("dotenv").config();
 
 app.use(
   cors({
-    origin: "https://manage-mvp.netlify.app",
+    origin: ["https://manage-mvp.netlify.app/", "http://localhost:3000"],
     methods: "*",
     allowedHeaders: ["Authorization", "Content-Type"],
   })
