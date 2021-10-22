@@ -8,13 +8,7 @@ const schema = require("./graphql/schema");
 // const schema = require("./graphql/schema2/index");
 require("dotenv").config();
 
-app.use(
-  cors({
-    origin: "*",
-    methods: "*",
-    allowedHeaders: ["Authorization", "Content-Type"],
-  })
-);
+app.use(cors());
 // Connection DB
 module.exports.conn_main = mongoose.createConnection(
   process.env.MONGODB_URI_MAIN_API,
@@ -52,7 +46,7 @@ app.use(
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   cors: {
-    origin: "*",
+    origin: ["https://manage-mvp.netlify.app", "http://localhost:3000"],
     method: "*",
     allowedHeaders: ["Content-Type"],
     // credentials: true,
